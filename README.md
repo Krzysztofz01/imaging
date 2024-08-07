@@ -1,22 +1,26 @@
 # Imaging
-
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/disintegration/imaging)](https://pkg.go.dev/github.com/disintegration/imaging)
-[![Build Status](https://travis-ci.org/disintegration/imaging.svg?branch=master)](https://travis-ci.org/disintegration/imaging)
-[![Coverage Status](https://coveralls.io/repos/github/disintegration/imaging/badge.svg?branch=master&service=github)](https://coveralls.io/github/disintegration/imaging?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/disintegration/imaging)](https://goreportcard.com/report/github.com/disintegration/imaging)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Krzysztofz01/imaging.svg)](https://pkg.go.dev/github.com/Krzysztofz01/imaging)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Krzysztofz01/imaging)](https://goreportcard.com/report/github.com/Krzysztofz01/imaging)
 
 Package imaging provides basic image processing functions (resize, rotate, crop, brightness/contrast adjustments, etc.).
 
 All the image processing functions provided by the package accept any image type that implements `image.Image` interface
 as an input, and return a new image of `*image.NRGBA` type (32bit RGBA colors, non-premultiplied alpha).
 
-## Installation
+## About the fork
+The original project can be found at this link:
+[disintegration/imaging](https://github.com/disintegration/imaging)
 
-    go get -u github.com/disintegration/imaging
+The fork of this project aims to provide fixes related to vulnerabilities found in this project, aims to update dependencies, replace deprecated APIs and make functional improvements.
+
+## Installation
+```sh
+go get -u github.com/Krzysztofz01/imaging
+```
 
 ## Documentation
 
-https://pkg.go.dev/github.com/disintegration/imaging
+https://pkg.go.dev/github.com/Krzysztofz01/imaging
 
 ## Usage examples
 
@@ -178,7 +182,7 @@ import (
 	"image/color"
 	"log"
 
-	"github.com/disintegration/imaging"
+	"github.com/Krzysztofz01/imaging"
 )
 
 func main() {
