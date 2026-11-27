@@ -96,7 +96,10 @@ func TestOpenSave(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to create temporary directory: %v", err)
 	}
-	defer os.RemoveAll(dir)
+
+	defer func() {
+		_ = os.RemoveAll(dir)
+	}()
 
 	for _, ext := range []string{"jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff"} {
 		filename := filepath.Join(dir, "test."+ext)
@@ -137,7 +140,7 @@ func TestOpenSave(t *testing.T) {
 
 	buf = &bytes.Buffer{}
 	err = Encode(buf, imgWithAlpha, Format(100))
-	if err != ErrUnsupportedFormat {
+	if !errors.Is(err, ErrUnsupportedFormat) {
 		t.Fatalf("got %v want ErrUnsupportedFormat", err)
 	}
 
@@ -148,7 +151,7 @@ func TestOpenSave(t *testing.T) {
 	}
 
 	err = Save(imgWithAlpha, filepath.Join(dir, "test.unknown"))
-	if err != ErrUnsupportedFormat {
+	if !errors.Is(err, ErrUnsupportedFormat) {
 		t.Fatalf("got %v want ErrUnsupportedFormat", err)
 	}
 
@@ -157,17 +160,17 @@ func TestOpenSave(t *testing.T) {
 	defer func() { fs = prevFS }()
 
 	err = Save(imgWithAlpha, "test.jpg")
-	if err != errCreate {
+	if !errors.Is(err, errCreate) {
 		t.Fatalf("got error %v want errCreate", err)
 	}
 
 	err = Save(imgWithAlpha, "badFile.jpg")
-	if err != errClose {
+	if !errors.Is(err, errClose) {
 		t.Fatalf("got error %v want errClose", err)
 	}
 
 	_, err = Open("test.jpg")
-	if err != errOpen {
+	if !errors.Is(err, errOpen) {
 		t.Fatalf("got error %v want errOpen", err)
 	}
 }
@@ -222,7 +225,7 @@ func TestFormatFromExtension(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			got, err := FormatFromExtension(tc.ext)
-			if err != tc.err {
+			if !errors.Is(err, tc.err) {
 				t.Errorf("got error %#v want %#v", err, tc.err)
 			}
 			if got != tc.want {

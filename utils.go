@@ -104,24 +104,24 @@ func rgbToHSL(r, g, b uint8) (float64, float64, float64) {
 	gg := float64(g) / 255
 	bb := float64(b) / 255
 
-	max := math.Max(rr, math.Max(gg, bb))
-	min := math.Min(rr, math.Min(gg, bb))
+	rgbMax := math.Max(rr, math.Max(gg, bb))
+	rgbMin := math.Min(rr, math.Min(gg, bb))
 
-	l := (max + min) / 2
+	l := (rgbMax + rgbMin) / 2
 
-	if max == min {
+	if rgbMax == rgbMin {
 		return 0, 0, l
 	}
 
 	var h, s float64
-	d := max - min
+	d := rgbMax - rgbMin
 	if l > 0.5 {
-		s = d / (2 - max - min)
+		s = d / (2 - rgbMax - rgbMin)
 	} else {
-		s = d / (max + min)
+		s = d / (rgbMax + rgbMin)
 	}
 
-	switch max {
+	switch rgbMax {
 	case rr:
 		h = (gg - bb) / d
 		if g < b {
